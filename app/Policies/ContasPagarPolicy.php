@@ -53,7 +53,7 @@ class ContasPagarPolicy
      */
     public function update(User $user, ContasPagar $contasPagar)
     {
-        return $user->hasPermissionTo('Edit ContasPagar');
+        return $user->hasPermissionTo('Update ContasPagar');
     }
 
     /**

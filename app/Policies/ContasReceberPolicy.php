@@ -53,7 +53,7 @@ class ContasReceberPolicy
      */
     public function update(User $user, ContasReceber $contasReceber)
     {
-        return $user->hasPermissionTo('Edit ContasReceber');
+        return $user->hasPermissionTo('Update ContasReceber');
     }
 
     /**
