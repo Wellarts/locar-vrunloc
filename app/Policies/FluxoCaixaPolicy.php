@@ -53,7 +53,7 @@ class FluxoCaixaPolicy
      */
     public function update(User $user, FluxoCaixa $fluxoCaixa)
     {
-        return $user->hasPermissionTo('Edit FluxoCaixa');
+        return $user->hasPermissionTo('Update FluxoCaixa');
     }
 
     /**

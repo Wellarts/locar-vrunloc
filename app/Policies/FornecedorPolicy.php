@@ -54,7 +54,7 @@ class FornecedorPolicy
      */
     public function update(User $user, Fornecedor $fornecedor)
     {
-        return $user->hasPermissionTo('Edit Fornecedor');
+        return $user->hasPermissionTo('Update Fornecedor');
     }
 
     /**

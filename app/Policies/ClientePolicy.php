@@ -37,7 +37,7 @@ class ClientePolicy
     
     public function update(User $user, Cliente $cliente)
     {
-        return $user->hasPermissionTo('Edit Cliente');
+        return $user->hasPermissionTo('Update Cliente');
     }
 
     
