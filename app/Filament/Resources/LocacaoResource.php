@@ -28,7 +28,7 @@ class LocacaoResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Locações';
-    
+
     protected static ?string $navigationGroup = 'Locar';
 
     public static function form(Form $form): Form
@@ -52,11 +52,11 @@ class LocacaoResource extends Resource
                                         $cliente = Cliente::find($state);
                                         Notification::make()
                                             ->title('ATENÇÃO')
-                                            ->body('A validade da CNH do cliente selecionado: '. Carbon::parse($cliente->validade_cnh)->format('d/m/Y') ) 
+                                            ->body('A validade da CNH do cliente selecionado: '. Carbon::parse($cliente->validade_cnh)->format('d/m/Y') )
                                             ->warning()
-                                            ->persistent() 
+                                            ->persistent()
                                             ->send();
-                                                       
+
                                     }),
                                 Forms\Components\Select::make('veiculo_id')
                                     ->relationship(
@@ -82,10 +82,10 @@ class LocacaoResource extends Resource
                                         $dt_retorno = Carbon::parse($get('data_retorno'));
                                         $qtd_dias = $dt_retorno->diffInDays($dt_saida);
                                         $set('qtd_diarias', $qtd_dias);
-                                      
+
                                         $carro = Veiculo::find($get('veiculo_id'));
                                         $set('valor_total', ($carro->valor_diaria * $qtd_dias));
-                                 
+
                                     })
                                     ->required(),
                                 Forms\Components\TimePicker::make('hora_retorno')
@@ -96,10 +96,10 @@ class LocacaoResource extends Resource
                                     ->required(),
                                 Forms\Components\TextInput::make('km_retorno')
                                     ->label('Km Retorno'),
-                                    
+
                             ]),
                         Fieldset::make('Valores')
-                            ->schema([    
+                            ->schema([
 
                                 Forms\Components\TextInput::make('qtd_diarias')
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #CF9A16;'])
@@ -110,7 +110,7 @@ class LocacaoResource extends Resource
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #D33644;'])
                                     ->label('Valor Total')
                                     ->readOnly()
-                                    ->required(),    
+                                    ->required(),
                                 Forms\Components\TextInput::make('valor_desconto')
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #3668D3;'])
                                     ->label('Desconto')
@@ -118,19 +118,19 @@ class LocacaoResource extends Resource
                                     ->reactive()
                                     ->afterStateUpdated(function ($state, callable $set, Get $get,) {
                                          $set('valor_total_desconto', ((float)$get('valor_total') - (float)$get('valor_desconto')));
-                                    
+
                                      }),
                                 Forms\Components\TextInput::make('valor_total_desconto')
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #17863E;'])
                                     ->label('Valor Total com Desconto')
                                     ->readOnly()
-                                    ->required(),    
+                                    ->required(),
                                 Forms\Components\Textarea::make('obs')
                                     ->label('Observações'),
                                 Forms\Components\Toggle::make('status')
                                     ->label('Finalizar Locação'),
-                                    
-                            ]),        
+
+                            ]),
                     ]),
             ]);
     }
@@ -164,7 +164,7 @@ class LocacaoResource extends Resource
                 Tables\Columns\TextColumn::make('Km_Percorrido')
                     ->label('Km Percorrido')
                     ->getStateUsing(function (Locacao $record): int {
-                        
+
                         return  ($record->km_retorno - $record->km_saida);
 
                     }),
@@ -195,6 +195,9 @@ class LocacaoResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('Imprimir')
+                ->url(fn (Locacao $record): string => route('imprimirLocacao', $record))
+                ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

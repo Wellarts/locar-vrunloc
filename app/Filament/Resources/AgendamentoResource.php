@@ -174,6 +174,9 @@ class AgendamentoResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('Imprimir')
+                ->url(fn (Agendamento $record): string => route('imprimirAgendamento', $record))
+                ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
