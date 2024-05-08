@@ -51,7 +51,7 @@ class ClienteResource extends Resource
                     ->label('Endereço')
                     ->columnSpanFull(),
                     Forms\Components\Select::make('estado_id')
-                  //  ->label('Estado')
+                    ->label('Estado')
                     ->native(false)
                     ->searchable()
                     ->required()
@@ -59,7 +59,7 @@ class ClienteResource extends Resource
                     ->reactive(),
                 Forms\Components\Select::make('cidade_id')
                     ->label('Cidade')
-                  //  ->native(false)
+                    ->native(false)
                     ->searchable()
                     ->required()
                     ->options(function (callable $get) {
