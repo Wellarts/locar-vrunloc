@@ -18,6 +18,7 @@ use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class LocacaoPorMes extends Page implements HasTable
 {
+    #teste
     use InteractsWithTable;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
@@ -104,7 +105,7 @@ class LocacaoPorMes extends Page implements HasTable
                            ->when($data['data_saida_ate'],
                                fn($query) => $query->whereDate('data_saida', '<=', $data['data_saida_ate']));
                   })
-                    
+
                 ])
             ->bulkActions([
 
