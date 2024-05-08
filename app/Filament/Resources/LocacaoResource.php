@@ -20,6 +20,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Leandrocfe\FilamentPtbrFormFields\Money;
 
 class LocacaoResource extends Resource
 {
@@ -106,23 +107,26 @@ class LocacaoResource extends Resource
                                     ->label('Qtd Diárias')
                                     ->readOnly()
                                     ->required(),
-                                Forms\Components\TextInput::make('valor_total')
+                                Money::make('valor_total')
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #D33644;'])
                                     ->label('Valor Total')
+                                    ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                                     ->readOnly()
                                     ->required(),
-                                Forms\Components\TextInput::make('valor_desconto')
+                                Money::make('valor_desconto')
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #3668D3;'])
                                     ->label('Desconto')
+                                    ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                                     ->required()
                                     ->reactive()
                                     ->afterStateUpdated(function ($state, callable $set, Get $get,) {
                                          $set('valor_total_desconto', ((float)$get('valor_total') - (float)$get('valor_desconto')));
 
                                      }),
-                                Forms\Components\TextInput::make('valor_total_desconto')
+                                Money::make('valor_total_desconto')
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #17863E;'])
                                     ->label('Valor Total com Desconto')
+                                    ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                                     ->readOnly()
                                     ->required(),
                                 Forms\Components\Textarea::make('obs')

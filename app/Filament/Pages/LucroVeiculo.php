@@ -13,6 +13,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Set;
+use Leandrocfe\FilamentPtbrFormFields\Money;
 
 class LucroVeiculo extends Page implements HasForms
 {
@@ -57,15 +58,19 @@ class LucroVeiculo extends Page implements HasForms
 
 
                         }),
-                    Forms\Components\TextInput::make('total_locacao')
+                  //  Forms\Components\TextInput::make('total_locacao')
+                        Money::make('total_locacao')
+                        ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                         ->readOnly()
                       //  ->money('BRL')
                         ->label('Total de Locação R$:'),
-                    Forms\Components\TextInput::make('total_custo')
+                        Money::make('total_custo')
+                        ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                         ->readOnly()
                       //  ->money('BRL')
                         ->label('Total de Custos R$:'),
-                    Forms\Components\TextInput::make('lucro')
+                        Money::make('lucro')
+                        ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                         ->readOnly()
                        // ->money('BRL')
                         ->label('Lucro Real R$:'),
