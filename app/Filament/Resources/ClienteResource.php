@@ -51,7 +51,7 @@ class ClienteResource extends Resource
                     ->label('Endereço')
                     ->columnSpanFull(),
                     Forms\Components\Select::make('estado_id')
-                    ->label('Estado')
+                  //  ->label('Estado')
                     ->native(false)
                     ->searchable()
                     ->required()
@@ -59,7 +59,7 @@ class ClienteResource extends Resource
                     ->reactive(),
                 Forms\Components\Select::make('cidade_id')
                     ->label('Cidade')
-                    ->native(false)
+                  //  ->native(false)
                     ->searchable()
                     ->required()
                     ->options(function (callable $get) {
@@ -87,16 +87,16 @@ class ClienteResource extends Resource
                     ->email()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('rede_social')
-                    ->label('Rede Social'),                    
+                    ->label('Rede Social'),
                 Forms\Components\TextInput::make('cnh')
-                        ->label('CNH'),                  
+                        ->label('CNH'),
                 Forms\Components\DatePicker::make('validade_cnh')
                         ->format('d/m/Y')
-                        ->label('Valiade da CNH'),                    
+                        ->label('Valiade da CNH'),
                 Forms\Components\TextInput::make('rg')
                         ->label('RG'),
                 Forms\Components\TextInput::make('exp_rg')
-                        ->label('Orgão Exp.'),                    
+                        ->label('Orgão Exp.'),
                 Forms\Components\Select::make('estado_exp_rg')
                         ->searchable()
                         ->label('UF - Expedidor')
@@ -107,7 +107,7 @@ class ClienteResource extends Resource
                                 '2xl' => 2,
                             ])
                         ->label('Foto CNH'),
-                    
+
                 Forms\Components\DatePicker::make('data_nascimento'),
                 ])
             ]);
