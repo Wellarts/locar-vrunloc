@@ -21,7 +21,7 @@ class AgendamentoPolicy
      */
     public function view(User $user, Agendamento $agendamento)
     {
-        
+
     }
 
     /**
@@ -29,7 +29,7 @@ class AgendamentoPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('Create Activity');
+        return $user->hasPermissionTo('Create Agendamento');
     }
 
     /**
@@ -37,7 +37,7 @@ class AgendamentoPolicy
      */
     public function update(User $user, Agendamento $agendamento): bool
     {
-        return $user->hasPermissionTo('Update Activity');
+        return $user->hasPermissionTo('Update Agendamento');
     }
 
     /**
@@ -45,7 +45,7 @@ class AgendamentoPolicy
      */
     public function delete(User $user, Agendamento $agendamento): bool
     {
-        return $user->hasPermissionTo('Delete Activity');
+        return $user->hasPermissionTo('Delete Agendamento');
     }
 
     /**
