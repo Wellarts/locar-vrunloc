@@ -14,6 +14,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -37,6 +38,7 @@ class ContasReceberResource extends Resource
             ->schema([
                 Forms\Components\Select::make('cliente_id')
                     ->label('Cliente')
+                    ->searchable()
                     ->options(Cliente::all()->pluck('nome', 'id')->toArray())
                     ->required(),
                 Forms\Components\TextInput::make('valor_total')
@@ -150,6 +152,7 @@ class ContasReceberResource extends Resource
 
 
             Tables\Columns\TextColumn::make('valor_parcela')
+                ->summarize(Sum::make()->money('BRL')->label('Total'))
                 ->alignCenter()
                 ->badge()
                 ->color('danger')
@@ -158,6 +161,7 @@ class ContasReceberResource extends Resource
                 ->label('Recebido')
                 ->boolean(),
             Tables\Columns\TextColumn::make('valor_recebido')
+                ->summarize(Sum::make()->money('BRL')->label('Total'))
                 ->label('Valor Recebido')
                 ->alignCenter()
                 ->badge()
@@ -194,7 +198,7 @@ class ContasReceberResource extends Resource
                                 fn($query) => $query->whereDate('data_vencimento', '>=', $data['vencimento_de']))
                             ->when($data['vencimento_ate'],
                                 fn($query) => $query->whereDate('data_vencimento', '<=', $data['vencimento_ate']));
-                    }) 
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make()

@@ -14,6 +14,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -142,6 +143,7 @@ class ContasPagarResource extends Resource
                             3 => 'Cartão',
                         ]),
                     Tables\Columns\TextColumn::make('valor_parcela')
+                        ->summarize(Sum::make()->money('BRL')->label('Total'))
                         ->badge()
                         ->alignCenter()
                         ->color('danger')
@@ -150,6 +152,7 @@ class ContasPagarResource extends Resource
                         ->label('Pago')
                         ->boolean(),
                     Tables\Columns\TextColumn::make('valor_pago')
+                        ->summarize(Sum::make()->money('BRL')->label('Total'))
                         ->badge()
                         ->alignCenter()
                         ->color('warning')
@@ -196,14 +199,14 @@ class ContasPagarResource extends Resource
                         $addFluxoCaixa = [
                             'valor' => ($record->valor_parcela * -1),
                             'tipo'  => 'DEBITO',
-                            'obs'   => 'Pagamento da compra nº: '.$record->compra_id. '',
+                            'obs'   => 'Pagamento de conta',
                         ];
 
                         FluxoCaixa::create($addFluxoCaixa);
                     }
                 }),
                 Tables\Actions\DeleteAction::make(),
-               
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

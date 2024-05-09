@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -59,6 +60,7 @@ class FluxoCaixaResource extends Resource
                 })
                 ->sortable(),
                 Tables\Columns\TextColumn::make('valor')
+                    ->summarize(Sum::make()->money('BRL')->label('Total'))
                     ->money('BRL'),
                 Tables\Columns\TextColumn::make('obs')
                     ->label('Descrição')

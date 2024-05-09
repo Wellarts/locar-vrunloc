@@ -16,6 +16,7 @@ use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -60,6 +61,7 @@ class LocacaoResource extends Resource
 
                                     }),
                                 Forms\Components\Select::make('veiculo_id')
+                                    ->required()
                                     ->relationship(
                                         name: 'veiculo',
                                         modifyQueryUsing: fn (Builder $query) => $query->orderBy('modelo')->orderBy('placa'),
@@ -107,23 +109,23 @@ class LocacaoResource extends Resource
                                     ->label('Qtd Diárias')
                                     ->readOnly()
                                     ->required(),
-                                Money::make('valor_total')
+                                Forms\Components\TextInput::make('valor_total')
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #D33644;'])
                                     ->label('Valor Total')
                                     ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                                     ->readOnly()
                                     ->required(),
-                                Money::make('valor_desconto')
+                                Forms\Components\TextInput::make('valor_desconto')
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #3668D3;'])
                                     ->label('Desconto')
                                     ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                                     ->required()
-                                    ->reactive()
+                                    ->live(debounce: 500)
                                     ->afterStateUpdated(function ($state, callable $set, Get $get,) {
                                          $set('valor_total_desconto', ((float)$get('valor_total') - (float)$get('valor_desconto')));
 
                                      }),
-                                Money::make('valor_total_desconto')
+                                Forms\Components\TextInput::make('valor_total_desconto')
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #17863E;'])
                                     ->label('Valor Total com Desconto')
                                     ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
@@ -181,6 +183,7 @@ class LocacaoResource extends Resource
                     ->money('BRL')
                     ->label('Desconto'),
                 Tables\Columns\TextColumn::make('valor_total_desconto')
+                    ->summarize(Sum::make()->money('BRL')->label('Total'))
                     ->money('BRL')
                     ->label('Valor Total com Desconto'),
                 Tables\Columns\ToggleColumn::make('status')
