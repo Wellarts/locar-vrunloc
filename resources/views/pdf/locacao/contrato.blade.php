@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+x'x'x'x'<!DOCTYPE html>
 <html>
 <head>
 
@@ -292,6 +292,11 @@
 </div>
 <div>
     <p class="parag">
+        
+
+
+
+
         1. LOCADORA DE VEÍCULOS MOTOMASTER CAMPO GRANDE LTDA, inscrita no CNPJ nº 53-825-708/0001-48, com endereço na Avenida
         Cesário de Melo, nº 4030 - Campo Grande - Rio de Janeiro - RJ, doravante denominada LOCADORA, e se regerá pelas cláusulas e
         condições seguintes:<br>
