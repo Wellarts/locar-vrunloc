@@ -50,6 +50,7 @@ class FluxoCaixaResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('tipo')
+                ->searchable()
                 ->badge()
                 ->color(static function ($state): string {
                     if ($state === 'CREDITO') {
@@ -66,9 +67,10 @@ class FluxoCaixaResource extends Resource
                     ->label('Descrição')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Data Hora')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
+                   // ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
