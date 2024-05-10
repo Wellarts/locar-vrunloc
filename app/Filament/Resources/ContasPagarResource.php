@@ -44,7 +44,7 @@ class ContasPagarResource extends Resource
                 Forms\Components\TextInput::make('valor_total')
                     ->required(),
                 Forms\Components\TextInput::make('parcelas')
-                    ->reactive()
+                    ->live(onBlur: true)
                     ->afterStateUpdated(function (Get $get, Set $set) {
                         if($get('parcelas') != 1)
                            {

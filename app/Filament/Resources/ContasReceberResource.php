@@ -45,7 +45,7 @@ class ContasReceberResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('parcelas')
                     ->hiddenOn('edit')
-                    ->reactive()
+                    ->live(onBlur: true)
                     ->afterStateUpdated(function (Get $get, callable $set) {
                         if($get('parcelas') != 1)
                            {
