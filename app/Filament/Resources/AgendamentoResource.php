@@ -50,7 +50,7 @@ class AgendamentoResource extends Resource
                                 Forms\Components\Select::make('veiculo_id')
                                     ->relationship(
                                         name: 'veiculo',
-                                        modifyQueryUsing: fn (Builder $query) => $query->orderBy('modelo')->orderBy('placa'),
+                                        modifyQueryUsing: fn (Builder $query) => $query->where('status',1)->orderBy('modelo')->orderBy('placa'),
                                     )
                                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->modelo} {$record->placa}")
                                     ->searchable(['modelo', 'placa'])
