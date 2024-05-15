@@ -106,6 +106,7 @@ class ClienteResource extends Resource
                                 'xl' => 2,
                                 '2xl' => 2,
                             ])
+                        ->downloadable()
                         ->label('Foto CNH'),
 
                 Forms\Components\DatePicker::make('data_nascimento'),
