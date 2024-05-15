@@ -205,7 +205,8 @@ class LocacaoResource extends Resource
                 Tables\Actions\Action::make('Imprimir')
                 ->url(fn (Locacao $record): string => route('imprimirLocacao', $record))
                 ->openUrlInNewTab(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->modalHeading('Editar locação'),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

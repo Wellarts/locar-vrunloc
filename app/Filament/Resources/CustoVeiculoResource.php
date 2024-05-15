@@ -42,7 +42,7 @@ class CustoVeiculoResource extends Resource
                         )
                         ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->modelo} {$record->placa}")
                         ->searchable(['modelo', 'placa']),
-                       
+
                 Forms\Components\TextInput::make('km_atual')
                     ->label('Km Atual')
                     ->required(),
@@ -91,7 +91,8 @@ class CustoVeiculoResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                ->modalHeading('Editar custo veículo'),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
