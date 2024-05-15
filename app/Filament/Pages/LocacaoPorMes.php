@@ -27,7 +27,7 @@ class LocacaoPorMes extends Page implements HasTable
 
     protected static ?string $navigationGroup = 'Consultas';
 
-    protected static ?string $title = 'Lucratividade Mensal';
+    protected static ?string $title = 'Faturamento Mensal';
 
     public function mount()
     {
