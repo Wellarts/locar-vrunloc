@@ -32,6 +32,7 @@ class CustoVeiculoResource extends Resource
         return $form
             ->schema([
                     Forms\Components\Select::make('fornecedor_id')
+                        ->searchable()
                         ->label('Fornecedor')
                         ->required()
                         ->options(Fornecedor::all()->pluck('nome', 'id')->toArray()),
