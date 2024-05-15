@@ -23,14 +23,14 @@ class VeiculoResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
     protected static ?string $navigationLabel = 'Veículos';
-    
+
     protected static ?string $navigationGroup = 'Cadastros';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                     
+
                         Fieldset::make('Veículo')
                             ->schema([
                                 Grid::make([
@@ -64,34 +64,38 @@ class VeiculoResource extends Resource
                                     'xl' => 2,
                                     '2xl' => 2,
                                 ])->schema([
+                                    Forms\Components\Toggle::make('status_alerta')
+                                        ->columnSpanFull()
+                                        ->default(false)
+                                        ->label('Ativar/Desativar - Alertas'),
                                     Forms\Components\TextInput::make('prox_troca_oleo')
-                                    ->label('Próxima Troca de Óleo - Km'),
-                                Forms\Components\TextInput::make('aviso_troca_oleo')
-                                    ->label('Aviso Troca do Óleo - Km'),
-                                Forms\Components\TextInput::make('prox_troca_filtro')
-                                    ->label('Próxima Troca do Filtro - Km'),
-                                Forms\Components\TextInput::make('aviso_troca_filtro')
-                                    ->label('Aviso Troca do Filtro - Km'),
-                                Forms\Components\TextInput::make('prox_troca_correia')
-                                    ->label('Próxima Troca da Correia - Km'),
-                                Forms\Components\TextInput::make('aviso_troca_correia')
-                                    ->label('Aviso Troca do Correia - Km'),
-                                Forms\Components\TextInput::make('prox_troca_pastilha')
-                                    ->label('Próxima Troca da Pastilha - Km'),
-                                Forms\Components\TextInput::make('aviso_troca_pastilha')
-                                    ->label('Aviso Troca da Pastilha - Km'),
-                               
-                                
-                                
+                                        ->label('Próxima Troca de Óleo - Km'),
+                                    Forms\Components\TextInput::make('aviso_troca_oleo')
+                                        ->label('Aviso Troca do Óleo - Km'),
+                                    Forms\Components\TextInput::make('prox_troca_filtro')
+                                        ->label('Próxima Troca do Filtro - Km'),
+                                    Forms\Components\TextInput::make('aviso_troca_filtro')
+                                        ->label('Aviso Troca do Filtro - Km'),
+                                    Forms\Components\TextInput::make('prox_troca_correia')
+                                        ->label('Próxima Troca da Correia - Km'),
+                                    Forms\Components\TextInput::make('aviso_troca_correia')
+                                        ->label('Aviso Troca do Correia - Km'),
+                                    Forms\Components\TextInput::make('prox_troca_pastilha')
+                                        ->label('Próxima Troca da Pastilha - Km'),
+                                    Forms\Components\TextInput::make('aviso_troca_pastilha')
+                                        ->label('Aviso Troca da Pastilha - Km'),
+
+
+
                                 ]),
-                                Forms\Components\Toggle::make('status')
+
+                                    ]),
+                                    Forms\Components\Toggle::make('status')
                                     ->default(true)
-                                    
-                                    ->label('Ativar / Desativar')
+                                    ->label('Ativar/Desativar - Veículo')
                                     ->columnSpan([
                                         'xl' => 2,
                                         '2xl' => 2,
-                                    ]),
                             ]),
                     ])
             ]);
