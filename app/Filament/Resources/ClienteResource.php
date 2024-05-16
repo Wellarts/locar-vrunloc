@@ -127,7 +127,7 @@ class ClienteResource extends Resource
                 ->label('Estado'),
             Tables\Columns\TextColumn::make('cidade.nome')
                 ->label('Cidade'),
-            Tables\Columns\TextColumn::make('telefone')
+            Tables\Columns\TextColumn::make('telefone_1')
 
                 ->formatStateUsing(fn (string $state) => vsprintf('(%d%d)%d%d%d%d%d-%d%d%d%d', str_split($state)))
                 ->label('Telefone'),
