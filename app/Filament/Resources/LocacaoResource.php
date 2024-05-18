@@ -132,6 +132,8 @@ class LocacaoResource extends Resource
                                     ->readOnly()
                                     ->required(),
                                 Forms\Components\Textarea::make('obs')
+                                    ->columnSpanFull()
+                                    ->autosize()
                                     ->label('Observações'),
                                 Forms\Components\Toggle::make('status')
                                     ->label('Finalizar Locação'),
