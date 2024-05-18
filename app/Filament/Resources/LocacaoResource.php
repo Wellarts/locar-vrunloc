@@ -62,6 +62,7 @@ class LocacaoResource extends Resource
                                     }),
                                 Forms\Components\Select::make('veiculo_id')
                                     ->required()
+                                    ->label('Veículo')
                                     ->relationship(
                                         name: 'veiculo',
                                         modifyQueryUsing: fn (Builder $query) => $query->where('status',1)->orderBy('modelo')->orderBy('placa'),
