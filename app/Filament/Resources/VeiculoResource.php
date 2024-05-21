@@ -79,7 +79,7 @@ class VeiculoResource extends Resource
                                     Forms\Components\TextInput::make('prox_troca_correia')
                                         ->label('Próxima Troca da Correia - Km'),
                                     Forms\Components\TextInput::make('aviso_troca_correia')
-                                        ->label('Aviso Troca do Correia - Km'),
+                                        ->label('Aviso Troca da Correia - Km'),
                                     Forms\Components\TextInput::make('prox_troca_pastilha')
                                         ->label('Próxima Troca da Pastilha - Km'),
                                     Forms\Components\TextInput::make('aviso_troca_pastilha')

@@ -33,8 +33,8 @@ class Contrato extends Controller
         //FORMATAR TELEFONE
          $tel_1 = $locacao->Cliente->telefone_1;
          $tel_2 = $locacao->Cliente->telefone_2;
-         $tel_1 = " (".substr($tel_1, 0, 2).") ".substr($tel_1, 2, 5)."-".substr($tel_1, 7, 11);
-         $tel_2 = " (".substr($tel_2, 0, 2).") ".substr($tel_2, 2, 5)."-".substr($tel_2, 7, 11);
+       //  $tel_1 = " (".substr($tel_1, 0, 2).") ".substr($tel_1, 2, 5)."-".substr($tel_1, 7, 11);
+       //  $tel_2 = " (".substr($tel_2, 0, 2).") ".substr($tel_2, 2, 5)."-".substr($tel_2, 7, 11);
 
 
 
