@@ -49,8 +49,8 @@ class LocacaoResource extends Resource
                                     ->columnSpan('2')
                                     ->reactive()
                                     ->required()
-                                    ->options(Cliente::all()->pluck('nome', 'id')->toArray()),
-                                   /* ->afterStateUpdated(function ($state, callable $set, Get $get) {
+                                    ->options(Cliente::all()->pluck('nome', 'id')->toArray())
+                                    ->afterStateUpdated(function ($state, callable $set, Get $get) {
                                         $cliente = Cliente::find($state);
                                         Notification::make()
                                             ->title('ATENÇÃO')
@@ -59,7 +59,7 @@ class LocacaoResource extends Resource
                                             ->persistent()
                                             ->send();
 
-                                    }), */
+                                    }),
                                 Forms\Components\Select::make('veiculo_id')
                                     ->required()
                                     ->label('Veículo')
