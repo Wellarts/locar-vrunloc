@@ -22,9 +22,16 @@
         border-style: solid;
         border-color: grey;
         width: 100%;
-        align-items: center;
-
+        border-collapse: collapse;
     }
+
+
+    #ficha td {
+    border: 1px solid rgb(160 160 160);
+    padding: 8px 10px;
+    }
+
+
     .tx {
         line-height:1.5;
         font-size: 15px;
@@ -58,123 +65,130 @@
 
 </table>
 <div class="retangulo">
-    <span class="texto">LOCATÁRIO</span>
+    <span class="texto">FICHA DE LOCAÇÃO</span>
+</div>
+<table>
+</table>
+<div class="retangulo">
+<span class="texto">LOCATÁRIO</span>
 </div>
 
-<table class="tabelas" width="100%" >
-    <tr>
-        <td colspan="2">
-            <b class="tx">Nome:</b> {{$locacao->Cliente->nome}}</p>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <b class="tx">Endereço:</b>  {{$locacao->Cliente->endereco}}
-        </td>
-    <tr>
-        <td>
-            <b class="tx">Cidade:</b> {{$locacao->Cliente->Cidade->nome}}
-        </td>
-        <td>
-            <b class="tx">UF:</b> {{$locacao->Cliente->Estado->nome}}
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <b class="tx">Rg:</b> {{$locacao->Cliente->rg}}
-        </td>
-        <td>
-            <b class="tx">Org Exp:</b> {{$locacao->Cliente->exp_rg}}
-        </td>
+<table class="tabelas" width="100%" id='ficha'>
+<tr>
+    <td colspan="2">
+        <b class="tx">Nome:</b> {{$locacao->Cliente->nome}}</p>
+    </td>
+</tr>
+<tr>
+    <td colspan="2">
+        <b class="tx">Endereço:</b>  {{$locacao->Cliente->endereco}}
+    </td>
+<tr>
+    <td>
+        <b class="tx">Cidade:</b> {{$locacao->Cliente->Cidade->nome}}
+    </td>
+    <td>
+        <b class="tx">UF:</b> {{$locacao->Cliente->Estado->nome}}
+    </td>
+</tr>
+<tr>
+    <td>
+        <b class="tx">Rg:</b> {{$locacao->Cliente->rg}}
+    </td>
+    <td>
+        <b class="tx">Org Exp:</b> {{$locacao->Cliente->exp_rg}}
+    </td>
 
-    </tr>
-    <tr>
-        <td>
-            <b class="tx">Telefones:</b>  {{$tel_1.' - '.$tel_2}}
-        </td>
-        <td>
-            <b class="tx">CPF/CNPJ:</b> {{$cpfCnpj}}
-        </td>
-    </tr>
+</tr>
+<tr>
+    <td>
+        <b class="tx">Telefones:</b>  {{$tel_1.' - '.$tel_2}}
+    </td>
+    <td>
+        <b class="tx">CPF/CNPJ:</b> {{$cpfCnpj}}
+    </td>
+</tr>
 
 </table>
 </table>
 <div class="retangulo">
-    <span class="texto">VEÍCULO</span>
+<span class="texto">VEÍCULO</span>
 </div>
-<table class="tabelas">
-    <tr>
-        <td>
-            <b class="tx">Marca:</b> {{$locacao->Veiculo->Marca->nome}}
-        </td>
-        <td>
-            <b class="tx">Modelo:</b> {{$locacao->Veiculo->modelo}}
-        </td>
-        <td>
-            <b class="tx">Chassi:</b> {{$locacao->Veiculo->chassi}}
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <b class="tx">Ano:</b>  {{$locacao->Veiculo->ano}}
-        </td>
-        <td>
-            <b class="tx">Cor:</b>  {{$locacao->Veiculo->cor}}
-        </td>
-        <td>
-            <b class="tx">Placa:</b>  {{$locacao->Veiculo->placa}}
-        </td>
-    </tr>
+<table class="tabelas" id='ficha'>
+<tr>
+    <td>
+        <b class="tx">Marca:</b> {{$locacao->Veiculo->Marca->nome}}
+    </td>
+    <td>
+        <b class="tx">Modelo:</b> {{$locacao->Veiculo->modelo}}
+    </td>
+    <td>
+        <b class="tx">Chassi:</b> {{$locacao->Veiculo->chassi}}
+    </td>
+</tr>
+<tr>
+    <td>
+        <b class="tx">Ano:</b>  {{$locacao->Veiculo->ano}}
+    </td>
+    <td>
+        <b class="tx">Cor:</b>  {{$locacao->Veiculo->cor}}
+    </td>
+    <td>
+        <b class="tx">Placa:</b>  {{$locacao->Veiculo->placa}}
+    </td>
+</tr>
 </table>
 <div class="retangulo">
-    <span class="texto">LOCAÇÃO</span>
+<span class="texto">LOCAÇÃO</span>
 </div>
-<table class="tabelas">
-    <tr>
-        <td>
-            <b class="tx">Data da Saída:</b> {{\Carbon\Carbon::parse($locacao->data_saida)->format('d/m/Y')}}
-        </td>
-        <td>
-            <b class="tx">Hora da Saída:</b> {{$locacao->hora_saida}}
-        </td>
+<table class="tabelas" id='ficha'>
+<tr>
+    <td>
+        <b class="tx">Data da Saída:</b> {{\Carbon\Carbon::parse($locacao->data_saida)->format('d/m/Y')}}
+    </td>
+    <td>
+        <b class="tx">Hora da Saída:</b> {{$locacao->hora_saida}}
+    </td>
 
-        <td>
-            <b class="tx">Data do Retorno:</b> {{\Carbon\Carbon::parse($locacao->data_retorno)->format('d/m/Y')}}
-        </td>
-        <td>
-            <b class="tx">Hora do Retorno:</b> {{$locacao->hora_retorno}}
-        </td>
-    </tr>
-        <td>
-            <b class="tx">Km de Saída:</b>  {{$locacao->km_saida}}
-        </td>
-        <td>
-            <b class="tx">Qtd de Diárias:</b> {{$locacao->qtd_diarias}}
-        </td>
-        <td colspan="2">
-            <b class="tx">Valor da Diária R$:</b> {{$locacao->Veiculo->valor_diaria}}
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <b class="tx">Km de Retorno:</b> {{$locacao->km_retorno}}
-        </td>
-        <td colspan="2">
-            <b class="tx">Valor do Desconto R$:</b> {{$locacao->valor_desconto}}
-        </td>
-        <td colspan="2">
-            <b class="tx">Valor Total R$:</b> {{$locacao->valor_total_desconto}}
-        </td>
-    </tr>
-</p>
+    <td>
+        <b class="tx">Data do Retorno:</b> {{\Carbon\Carbon::parse($locacao->data_retorno)->format('d/m/Y')}}
+    </td>
+    <td>
+        <b class="tx">Hora do Retorno:</b> {{$locacao->hora_retorno}}
+    </td>
+</tr>
+    <td>
+        <b class="tx">Km de Saída:</b>  {{$locacao->km_saida}}
+    </td>
+    <td>
+        <b class="tx">Qtd de Diárias:</b> {{$locacao->qtd_diarias}}
+    </td>
+    <td colspan="2">
+        <b class="tx">Valor da Diária R$:</b> {{$locacao->Veiculo->valor_diaria}}
+    </td>
+
+</tr>
+<tr>
+    <td >
+        <b class="tx">Km de Retorno:</b> {{$locacao->km_retorno}}
+    </td>
+    <td >
+        <b class="tx">Valor do Desconto R$:</b> {{$locacao->valor_desconto}}
+    </td>
+    <td colspan="2">
+        <b class="tx">Valor Total R$:</b> {{$locacao->valor_total_desconto}}
+    </td>
+
+</tr>
+
 </table>
 
-<table class="tabelas">
-    <tr>
-        <td>
-            <b class="tx">Observações: </b> {{$locacao->obs}}
-        </td>
-    </tr>
+<table class="tabelas" id='ficha'>
+<tr>
+    <td>
+        <b class="tx">Observações: </b> {{$locacao->obs}}
+    </td>
+</tr>
 </table>
 
 <!-- PÁGINA 2 -->
