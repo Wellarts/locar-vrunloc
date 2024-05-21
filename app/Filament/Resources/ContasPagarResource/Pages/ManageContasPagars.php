@@ -42,7 +42,7 @@ class ManageContasPagars extends ManageRecords
                                 ContasPagar::create($parcelas);
                             }
                         } else {
-                            if ($data['formaPgmto'] == 1 or $data['formaPgmto'] == 2) {
+                            if (($data['status'] == 1)) {
                                 $addFluxoCaixa = [
                                     'valor' => ($record->valor_total * -1),
                                     'tipo'  => 'DEBITO',

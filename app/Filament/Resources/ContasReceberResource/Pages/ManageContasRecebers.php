@@ -46,7 +46,7 @@ class ManageContasRecebers extends ManageRecords
                 }
                 else
                 {
-                   if($data['formaPgmto'] == 1 or $data['formaPgmto'] == 2)
+                   if(($data['status'] == 1))
                    {
                     $addFluxoCaixa = [
                         'valor' => ($record->valor_total),

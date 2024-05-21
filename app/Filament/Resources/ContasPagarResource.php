@@ -142,6 +142,7 @@ class ContasPagarResource extends Resource
                             1 => 'Dinheiro',
                             2 => 'Pix',
                             3 => 'Cartão',
+                            4 => 'Boleto',
                         ]),
                     Tables\Columns\TextColumn::make('valor_parcela')
                         ->summarize(Sum::make()->money('BRL')->label('Total'))
