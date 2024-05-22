@@ -9,6 +9,7 @@ use App\Models\Locacao;
 use App\Models\Veiculo;
 use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Form;
@@ -17,6 +18,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -202,8 +204,24 @@ class LocacaoResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                SelectFilter::make('cliente')->searchable()->relationship('cliente', 'nome'),
+                SelectFilter::make('veiculo')->searchable()->relationship('veiculo', 'placa'),
+                Tables\Filters\Filter::make('datas')
+                   ->form([
+                       DatePicker::make('data_saida_de')
+                           ->label('Saída de:'),
+                       DatePicker::make('data_saida_ate')
+                           ->label('Saída ate:'),
+                   ])
+                   ->query(function ($query, array $data) {
+                       return $query
+                           ->when($data['data_saida_de'],
+                               fn($query) => $query->whereDate('data_saida', '>=', $data['data_saida_de']))
+                           ->when($data['data_saida_ate'],
+                               fn($query) => $query->whereDate('data_saida', '<=', $data['data_saida_ate']));
+                  })
+
+                ])
             ->actions([
                 Tables\Actions\Action::make('Imprimir')
                 ->url(fn (Locacao $record): string => route('imprimirLocacao', $record))

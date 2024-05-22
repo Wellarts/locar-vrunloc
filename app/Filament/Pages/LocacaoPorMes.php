@@ -89,8 +89,8 @@ class LocacaoPorMes extends Page implements HasTable
 
             ])
             ->filters([
-                SelectFilter::make('cliente')->relationship('cliente', 'nome'),
-                SelectFilter::make('veiculo')->relationship('veiculo', 'placa'),
+                SelectFilter::make('cliente')->searchable()->relationship('cliente', 'nome'),
+                SelectFilter::make('veiculo')->searchable()->relationship('veiculo', 'placa'),
                 Tables\Filters\Filter::make('datas')
                    ->form([
                        DatePicker::make('data_saida_de')
