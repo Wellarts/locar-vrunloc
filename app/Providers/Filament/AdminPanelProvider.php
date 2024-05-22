@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\ContasPagarHoje;
+use App\Filament\Widgets\ContasReceberHoje;
 use App\Filament\Widgets\LocacaoMes;
 use App\Filament\Widgets\SomatorioLocacao;
 use Filament\Http\Middleware\Authenticate;
@@ -49,6 +51,8 @@ class AdminPanelProvider extends PanelProvider
              //   Widgets\FilamentInfoWidget::class,
                 SomatorioLocacao::class,
                 LocacaoMes::class,
+                ContasReceberHoje::class,
+                ContasPagarHoje::class,
             ])
             ->middleware([
                 EncryptCookies::class,

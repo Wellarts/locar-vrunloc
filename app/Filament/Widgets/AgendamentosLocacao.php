@@ -10,7 +10,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class AgendamentosLocacao extends BaseWidget
 {
-    protected static ?int $sort = 3;
+    protected static ?int $sort = 5;
 
     protected static ?string $heading = 'Próximos Agendamentos';
 
@@ -32,7 +32,7 @@ class AgendamentosLocacao extends BaseWidget
             Tables\Columns\TextColumn::make('veiculo.placa')
                 ->searchable()
                  ->label('Placa'),
-               
+
             Tables\Columns\TextColumn::make('data_saida')
                 ->badge()
                 ->label('Data Saída')
@@ -49,7 +49,7 @@ class AgendamentosLocacao extends BaseWidget
                     }
 
                     if($qtd_dias < 0) {
-                        return 'warning'; 
+                        return 'warning';
                     }
 
                     if($qtd_dias > 3) {
@@ -57,9 +57,9 @@ class AgendamentosLocacao extends BaseWidget
                     }
 
 
-                    
-                }), 
-               
+
+                }),
+
             Tables\Columns\TextColumn::make('hora_saida')
                 ->sortable()
                 ->label('Hora Saída'),
