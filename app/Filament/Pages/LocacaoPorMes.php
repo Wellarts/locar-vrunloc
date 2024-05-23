@@ -10,6 +10,7 @@ use Filament\Pages\Page;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables;
+use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
@@ -87,6 +88,7 @@ class LocacaoPorMes extends Page implements HasTable
                                 ->sortable()
                                 ->alignCenter(),
                             TextColumn::make('qtd_diaria')
+                                ->Summarize(Count::make('qtd_diaria')->label('Total de Diárias'))
                                 ->alignCenter()
                                 ->label('Qtd Diárias'),
                             TextColumn::make('valor_diaria')
