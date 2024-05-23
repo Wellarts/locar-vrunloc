@@ -101,8 +101,8 @@ class Dashboard extends \Filament\Pages\Dashboard
     public function mount(): void
     {
 
-        $dados = new LocacaoPorMes();
-        $dados->mount();
+      //  $dados = new LocacaoPorMes();
+      //  $dados->mount();
 
         $veiculos = Veiculo::all();
 

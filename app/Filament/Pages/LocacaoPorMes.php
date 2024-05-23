@@ -29,6 +29,11 @@ class LocacaoPorMes extends Page implements HasTable
 
     protected static ?string $title = 'Faturamento Mensal';
 
+    public static function shouldRegisterNavigation(): bool
+        {
+            return false;
+        }
+
     public function mount()
     {
         Temp_lucratividade::truncate();
