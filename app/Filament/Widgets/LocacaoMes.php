@@ -22,7 +22,7 @@ class LocacaoMes extends ChartWidget
             end: now()->endOfYear(),
         )
         ->perMonth()
-        ->sum('valor_total');
+        ->sum('valor_total_desconto');
 
         return [
             'datasets' => [
