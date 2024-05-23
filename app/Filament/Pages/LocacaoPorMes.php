@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Models\Locacao;
 use App\Models\Temp_lucratividade;
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Pages\Page;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -31,36 +32,38 @@ class LocacaoPorMes extends Page implements HasTable
 
     public static function shouldRegisterNavigation(): bool
         {
-            return false;
+            return true;
         }
 
-    public function mount()
-    {
-        Temp_lucratividade::truncate();
+        public function mount()
+        {
+            Temp_lucratividade::truncate();
 
-        $Locacoes = Locacao::all();
+            $Locacoes = Locacao::all();
 
-        foreach($Locacoes as $Locacao){
+            foreach($Locacoes as $Locacao){
 
-            $valorLocacaoDia = ($Locacao->valor_total_desconto / $Locacao->qtd_diarias);
+                $valorLocacaoDia = ($Locacao->valor_total_desconto / $Locacao->qtd_diarias);
 
-           // dd($valorLocacaoDia);
+               // dd($valorLocacaoDia);
+                $dataDiarias = Carbon::create($Locacao->data_saida)->addDay(1);
+                    for($x=1;$x<=$Locacao->qtd_diarias;$x++){
 
-                for($x=1;$x<=$Locacao->qtd_diarias;$x++){
+                        $addLocacaoDia = [
+                            'cliente_id'  => $Locacao->cliente_id,
+                            'veiculo_id'  => $Locacao->veiculo_id,
+                            'data_saida'  => $dataDiarias,
+                            'qtd_diaria'  => 1,
+                            'valor_diaria'  => $valorLocacaoDia,
+                        ];
 
-                    $addLocacaoDia = [
-                        'cliente_id'  => $Locacao->cliente_id,
-                        'veiculo_id'  => $Locacao->veiculo_id,
-                        'data_saida'  => $Locacao->data_saida,
-                        'qtd_diaria'  => 1,
-                        'valor_diaria'  => $valorLocacaoDia,
-                    ];
+                        Temp_lucratividade::create($addLocacaoDia);
+                        $dataDiarias = Carbon::create($dataDiarias)->addDay(1);
+                    }
+            }
 
-                    Temp_lucratividade::create($addLocacaoDia);
 
-                }
         }
-    }
 
     public function table(Table $table): Table
     {
