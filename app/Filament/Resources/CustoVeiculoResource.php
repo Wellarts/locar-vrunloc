@@ -8,9 +8,12 @@ use App\Models\CustoVeiculo;
 use App\Models\Fornecedor;
 use App\Models\Veiculo;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -65,32 +68,49 @@ class CustoVeiculoResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('fornecedor.nome'),
-                Tables\Columns\TextColumn::make('veiculo.modelo')
-                    ->label('Veículo'),
-                Tables\Columns\TextColumn::make('veiculo.placa')
-                    ->label('Placa'),
-                Tables\Columns\TextColumn::make('km_atual')
-                    ->label('Km Atual'),
-                Tables\Columns\TextColumn::make('data')
-                    ->date(),
-                Tables\Columns\TextColumn::make('descricao')
-                    ->label('Descrição'),
-                Tables\Columns\TextColumn::make('valor')
-                    ->money('BRL')
-                    ->label('Valor Total'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('fornecedor.nome')
+                ->sortable(),
+            Tables\Columns\TextColumn::make('veiculo.modelo')
+                ->sortable()
+                ->label('Veículo'),
+            Tables\Columns\TextColumn::make('veiculo.placa')
+                ->label('Placa'),
+            Tables\Columns\TextColumn::make('km_atual')
+                ->label('Km Atual'),
+            Tables\Columns\TextColumn::make('data')
+                ->sortable()
+                ->date(),
+            Tables\Columns\TextColumn::make('valor')
+                ->summarize(Sum::make()->money('BRL')->label('Total'))
+                ->money('BRL')
+                ->label('Valor Total'),
+            Tables\Columns\TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+            Tables\Columns\TextColumn::make('updated_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+        ])
+        ->filters([
+            SelectFilter::make('fornecedor')->searchable()->relationship('fornecedor', 'nome'),
+            SelectFilter::make('veiculo')->searchable()->relationship('veiculo', 'placa')->label('Veículo - (Placa)'),
+            Tables\Filters\Filter::make('datas')
+            ->form([
+                DatePicker::make('data_de')
+                    ->label('Saída de:'),
+                DatePicker::make('data_ate')
+                    ->label('Saída ate:'),
             ])
-            ->filters([
-                //
-            ])
+            ->query(function ($query, array $data) {
+                return $query
+                    ->when($data['data_de'],
+                        fn($query) => $query->whereDate('data', '>=', $data['data_de']))
+                    ->when($data['data_ate'],
+                        fn($query) => $query->whereDate('data', '<=', $data['data_ate']));
+           })
+        ])
             ->actions([
                 Tables\Actions\EditAction::make()
                 ->modalHeading('Editar custo veículo'),
