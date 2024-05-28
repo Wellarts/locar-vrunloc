@@ -116,8 +116,7 @@ class LocacaoResource extends Resource
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #D33644;'])
                                     ->label('Valor Total')
                                     ->numeric()
-                                    ->inputMode('decimal')
-                                  //  ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
+                                    //  ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                                     ->readOnly()
                                     ->required(),
                                 Forms\Components\TextInput::make('valor_desconto')
