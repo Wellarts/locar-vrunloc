@@ -36,6 +36,7 @@ class FluxoCaixaResource extends Resource
                  ->required(),
 
              Forms\Components\TextInput::make('valor')
+                 ->numeric()
                  ->required(),
 
              Forms\Components\Textarea::make('obs')

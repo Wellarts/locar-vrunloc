@@ -42,6 +42,7 @@ class ContasReceberResource extends Resource
                     ->options(Cliente::all()->pluck('nome', 'id')->toArray())
                     ->required(),
                 Forms\Components\TextInput::make('valor_total')
+                    ->numeric()
                     ->required(),
                 Forms\Components\TextInput::make('parcelas')
                     ->hiddenOn('edit')
@@ -113,8 +114,10 @@ class ContasReceberResource extends Resource
                     ),
 
                 Forms\Components\TextInput::make('valor_parcela')
+                      ->numeric()
                       ->required(),
-                Forms\Components\TextInput::make('valor_recebido'),
+                Forms\Components\TextInput::make('valor_recebido')
+                       ->numeric(),
                 Forms\Components\Textarea::make('obs')
                     ->label('Observações'),
             ]);

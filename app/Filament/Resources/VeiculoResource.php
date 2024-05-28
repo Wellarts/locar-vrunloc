@@ -55,6 +55,7 @@ class VeiculoResource extends Resource
                                 Forms\Components\TextInput::make('chassi')
                                 ->label('Nº do Chassi'),
                                 Forms\Components\TextInput::make('valor_diaria')
+                                    ->live(onBlur: true)
                                     ->label('Valor Diária')
                                     ->numeric(),
                             ]),

@@ -115,15 +115,18 @@ class LocacaoResource extends Resource
                                 Forms\Components\TextInput::make('valor_total')
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #D33644;'])
                                     ->label('Valor Total')
-                                    ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
+                                    ->numeric()
+                                  //  ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                                     ->readOnly()
                                     ->required(),
                                 Forms\Components\TextInput::make('valor_desconto')
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #3668D3;'])
                                     ->label('Desconto')
-                                    ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
+                                 //   ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
+                                    ->numeric()
                                     ->required()
-                                    ->live(debounce: 500)
+                                   // ->live(debounce: 500)
+                                    ->live(onBlur: true)
                                     ->afterStateUpdated(function ($state, callable $set, Get $get,) {
                                          $set('valor_total_desconto', ((float)$get('valor_total') - (float)$get('valor_desconto')));
 
@@ -131,7 +134,8 @@ class LocacaoResource extends Resource
                                 Forms\Components\TextInput::make('valor_total_desconto')
                                     ->extraInputAttributes(['tabindex' => 1, 'style' => 'font-weight: bolder; font-size: 1rem; color: #17863E;'])
                                     ->label('Valor Total com Desconto')
-                                    ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
+                                   // ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
+                                    ->numeric()
                                     ->readOnly()
                                     ->required(),
                                 Forms\Components\Textarea::make('obs')

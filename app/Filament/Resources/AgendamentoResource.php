@@ -93,8 +93,10 @@ class AgendamentoResource extends Resource
                                     ->label('Valor Total')
                                     ->required(),
                                 Forms\Components\TextInput::make('valor_desconto')
+                                    ->numeric()
                                     ->label('Valor Desconto'),
                                 Forms\Components\TextInput::make('valor_pago')
+                                    ->numeric()
                                     ->hint('Pagamento Antecipado')
                                     ->required()
                                     ->label('Valor Pago')

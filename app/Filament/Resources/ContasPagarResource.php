@@ -42,6 +42,7 @@ class ContasPagarResource extends Resource
                     ->options(Fornecedor::all()->pluck('nome', 'id')->toArray())
                     ->required(),
                 Forms\Components\TextInput::make('valor_total')
+                    ->numeric()
                     ->required(),
                 Forms\Components\TextInput::make('parcelas')
                     ->live(onBlur: true)
@@ -108,8 +109,10 @@ class ContasPagarResource extends Resource
                     ),
 
                 Forms\Components\TextInput::make('valor_parcela')
+                      ->numeric()
                       ->required(),
-                Forms\Components\TextInput::make('valor_pago'),
+                Forms\Components\TextInput::make('valor_pago')
+                      ->numeric(),
                 Forms\Components\Textarea::make('obs')
                     ->label('Observações'),
             ]);
