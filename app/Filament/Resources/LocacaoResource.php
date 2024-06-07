@@ -48,7 +48,10 @@ class LocacaoResource extends Resource
                                     ->schema([
                                 Forms\Components\Select::make('cliente_id')
                                     ->label('Cliente')
-                                    ->columnSpan('2')
+                                    ->columnSpan([
+                                        'xl' => 2,
+                                        '2xl' => 2,
+                                    ])
                                     ->reactive()
                                     ->required()
                                     ->options(Cliente::all()->pluck('nome', 'id')->toArray())
@@ -71,7 +74,10 @@ class LocacaoResource extends Resource
                                     )
                                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->modelo} {$record->placa}")
                                     ->searchable(['modelo', 'placa'])
-                                    ->columnSpan('2'),
+                                    ->columnSpan([
+                                        'xl' => 2,
+                                        '2xl' => 2,
+                                    ]),
                                 Forms\Components\DatePicker::make('data_saida')
                                     ->displayFormat('d/m/Y')
                                     ->label('Data Saída')

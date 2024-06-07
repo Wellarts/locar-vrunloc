@@ -45,7 +45,10 @@ class AgendamentoResource extends Resource
                                     ->native(false)
                                     ->searchable()
                                     ->options(Cliente::all()->pluck('nome', 'id')->toArray())
-                                    ->columnSpan('2')
+                                    ->columnSpan([
+                                        'xl' => 2,
+                                        '2xl' => 2,
+                                    ])
                                     ->required(),
                                 Forms\Components\Select::make('veiculo_id')
                                     ->relationship(
@@ -54,7 +57,10 @@ class AgendamentoResource extends Resource
                                     )
                                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->modelo} {$record->placa}")
                                     ->searchable(['modelo', 'placa'])
-                                    ->columnSpan('2'),
+                                    ->columnSpan([
+                                        'xl' => 2,
+                                        '2xl' => 2,
+                                    ]),
 
                                 Forms\Components\DatePicker::make('data_saida')
                                     ->displayFormat('d/m/Y')
