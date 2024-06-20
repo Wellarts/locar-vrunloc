@@ -97,6 +97,7 @@ class LocacaoResource extends Resource
 
                                         $carro = Veiculo::find($get('veiculo_id'));
                                         $set('valor_total', ($carro->valor_diaria * $qtd_dias));
+                                        $set('valor_desconto', '');
 
                                     })
                                     ->required(),
