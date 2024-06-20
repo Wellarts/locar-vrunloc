@@ -253,7 +253,7 @@
         ficando responsável por quaisquer danos causados ao veículo alugado ou a terceiros.<br>
         3.6.1 Caso o LOCATÁRIO opte por contratar alguma proteção veicular (seguro para pane, seguro para terceiros, seguro para o veículo alugado e
         seguro com moto reserva), fica a observação em que o seguro veicular só será válido dentro do perímetro de até 230 km (duzentos e trinta quilómetros)
-        de distância da base da locadora, sendo que, a proteção veicular para terceiros fixada no valor máximo a ser coberto em até R$30.000,00 (trinta
+        de distância da base da locadora, sendo que, a proteção veicular para terceiros fixada no valor máximo a ser coberto em até R$ 10.000,00 (dez
         mil reais), caso os danos a terceiros ultrapassar trinta mil reais, o valor excedente deve ser cobrado do LOCATÁRIO.
         3.7. O LOCADOR não é obrigado a disponibilizar veículo reserva (caso o mesmo não seja contratado previamente) e não se responsabiliza caso o
         LOCATÁRIO não possa dirigir devido à indisponibilidade do veículo.<br>
