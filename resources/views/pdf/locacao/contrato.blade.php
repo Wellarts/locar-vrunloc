@@ -55,7 +55,7 @@
 
 <table style="width: 100%">
   <tr>
-    <td><img src="{{ asset('img/logo-motomaster.jpg') }}" alt="Image" height="30" width="90"></td>
+    <td><img src="{{ asset('img/logo-motomaster.png') }}" alt="Image" height="60" width="180"></td>
     <td> <p style="width: 100%; font-size:28px; font-weight: bold;" align="center">Locadora Motomaster</p>
          <p style="font-size:16px;" align="center">Av. Cesário de Melo, nº 4030 Campo Grande - Rio de Janeiro - RJ.<br>
                                                   Contato: (21)7402-1183<br>
@@ -207,7 +207,7 @@
 
 <table style="width: 100%">
     <tr>
-        <td><img src="{{ asset('img/logo-motomaster.jpg') }}" alt="Image" height="30" width="90"></td>
+        <td><img src="{{ asset('img/logo-motomaster.png') }}" alt="Image" height="60" width="180"></td>
       <td> <p style="width: 100%; font-size:20px; font-weight: bold" align="center">Contrato de Locação de Veículos</p>
 
       </td>
