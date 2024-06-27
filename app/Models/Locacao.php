@@ -13,7 +13,7 @@ class Locacao extends Model
 
     protected $fillable = [
 
-       
+        
         'cliente_id',
         'veiculo_id',
         'data_saida',
@@ -28,6 +28,13 @@ class Locacao extends Model
         'valor_total_desconto',
         'obs',
         'status',
+        'status_financeiro',
+        'status_pago_financeiro',
+        'parcelas_financeiro',
+        'formaPgmto_financeiro',
+        'valor_parcela_financeiro',
+        'valor_total_financeiro',
+        'data_vencimento_financeiro',
     ];
 
     public function Cliente()
@@ -48,9 +55,7 @@ class Locacao extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['*']);
+            ->logOnly(['*']);
         // Chain fluent methods for configuration options
     }
 }
-
-
