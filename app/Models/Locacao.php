@@ -35,8 +35,12 @@ class Locacao extends Model
         'valor_parcela_financeiro',
         'valor_total_financeiro',
         'data_vencimento_financeiro',
+        'ocorrencia'
     ];
 
+    protected $casts = [
+        'ocorrencia' => 'array',
+    ];
     public function Cliente()
     {
         return $this->belongsTo(Cliente::class);

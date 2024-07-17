@@ -4,14 +4,23 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\LocacaoResource\Pages;
 use App\Filament\Resources\LocacaoResource\RelationManagers;
+use App\Filament\Resources\LocacaoResource\RelationManagers\OcorrenciaRelationManager;
 use App\Models\Cliente;
 use App\Models\Locacao;
 use App\Models\Veiculo;
 use Carbon\Carbon;
+use DateTime;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -147,8 +156,7 @@ class LocacaoResource extends Resource
                                     ->autosize()
                                     ->columnSpanFull()
                                     ->label('Observações'),
-                                Forms\Components\Toggle::make('status')
-                                    ->label('Finalizar Locação'),
+
                                 Fieldset::make('Financeiro')
                                     ->schema([
                                         Grid::make([
@@ -247,11 +255,52 @@ class LocacaoResource extends Resource
                                             ])
 
 
-                                    ])
-
+                                    ]),
 
                             ]),
                     ]),
+                    
+                Fieldset::make('Ocorrências da Locação')
+                    ->schema([
+                        Repeater::make('ocorrencia')
+                            ->label('Ocorrências')
+                            ->schema([
+                                Grid::make([
+                                    'xl' => 3,
+                                    '2xl' => 3,
+                                ])
+                                    ->schema([
+                                Select::make('tipo')
+                                    ->options([
+                                        'multa' => 'Multa',
+                                        'colisao' => 'Colisão',
+                                        'avaria' => 'Avaria',
+                                        'danos_terceiros' => 'Danos a Terceiros',
+                                        'outro' => 'Outros',
+                                    ])
+                                    ->required(),
+                                DateTimePicker::make('data_hora'),
+                                TextInput::make('valor'),
+                                Textarea::make('descricao')
+                                    ->columnSpan(2)
+                                    ->autosize()
+                                    ->label('Descrição'),
+                                
+                                ToggleButtons::make('status')
+                                    ->label('Concluído?')
+                                    ->default(false)
+                                    ->boolean()
+                                    ->grouped()
+
+
+                                    ])
+                            ])
+                            ->columnSpanFull()
+                            ->addActionLabel('Novo')
+                    ]),
+                Forms\Components\Toggle::make('status')
+                    ->label('Finalizar Locação'),
+
             ]);
     }
 
@@ -343,7 +392,7 @@ class LocacaoResource extends Resource
                     ->url(fn (Locacao $record): string => route('imprimirLocacao', $record))
                     ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make()
-                    ->modalHeading('Editar locação'),
+                     ->modalHeading('Editar locação'),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
