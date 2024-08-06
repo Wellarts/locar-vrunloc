@@ -134,11 +134,11 @@ class ContasReceberResource extends Resource
                 ->alignCenter()
                 ->label('Parcela Nº'),
             Tables\Columns\TextColumn::make('data_vencimento')
+                ->date('d/m/Y')
                 ->sortable()
                 ->alignCenter()
                 ->badge()
-                ->color('danger')
-                ->date(),
+                ->color('danger'),
             Tables\Columns\TextColumn::make('valor_total')
                 ->alignCenter()
                 ->badge()
@@ -173,11 +173,11 @@ class ContasReceberResource extends Resource
                 ->color('warning')
                 ->money('BRL'),
             Tables\Columns\TextColumn::make('data_recebimento')
+                ->date('d/m/Y')
                 ->alignCenter()
                 ->badge()
-                ->color('warning')
-                ->date(),
-                Tables\Columns\TextColumn::make('created_at')
+                ->color('warning'),
+            Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

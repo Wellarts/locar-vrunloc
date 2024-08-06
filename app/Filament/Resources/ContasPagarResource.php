@@ -132,7 +132,7 @@ class ContasPagarResource extends Resource
                         ->sortable()
                         ->alignCenter()
                         ->color('danger')
-                        ->date(),
+                        ->date('d/m/Y'),
                     Tables\Columns\TextColumn::make('valor_total')
                          ->badge()
                         ->alignCenter()
@@ -166,7 +166,7 @@ class ContasPagarResource extends Resource
                         ->alignCenter()
                         ->badge()
                         ->color('warning')
-                        ->date(),
+                        ->date('d/m/Y'),
                     Tables\Columns\TextColumn::make('created_at')
                         ->dateTime()
                         ->sortable()

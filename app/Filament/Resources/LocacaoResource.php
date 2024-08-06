@@ -27,12 +27,15 @@ use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Laravel\SerializableClosure\Serializers\Native;
 use Leandrocfe\FilamentPtbrFormFields\Money;
 
 class LocacaoResource extends Resource
@@ -44,6 +47,8 @@ class LocacaoResource extends Resource
     protected static ?string $navigationLabel = 'Locações';
 
     protected static ?string $navigationGroup = 'Locar';
+
+
 
     public static function form(Form $form): Form
     {
@@ -58,40 +63,54 @@ class LocacaoResource extends Resource
                             ->schema([
                                 Forms\Components\Select::make('cliente_id')
                                     ->label('Cliente')
+                                    ->searchable()
+                                    ->native(false)
                                     ->columnSpan([
                                         'xl' => 2,
                                         '2xl' => 2,
                                     ])
-                                    ->reactive()
+                                    ->live()
                                     ->required(false)
                                     ->options(Cliente::all()->pluck('nome', 'id')->toArray())
-                                    ->afterStateUpdated(function ($state, callable $set, Get $get) {
-                                        $cliente = Cliente::find($state);
-                                        Notification::make()
-                                            ->title('ATENÇÃO')
-                                            ->body('A validade da CNH do cliente selecionado: ' . Carbon::parse($cliente->validade_cnh)->format('d/m/Y'))
-                                            ->warning()
-                                            ->persistent()
-                                            ->send();
+                                    ->afterStateUpdated(function ($state) {
+                                        if ($state != null) {
+                                            $cliente = Cliente::find($state);
+                                            Notification::make()
+                                                ->title('ATENÇÃO')
+                                                ->body('A validade da CNH do cliente selecionado: ' . Carbon::parse($cliente->validade_cnh)->format('d/m/Y'))
+                                                ->warning()
+                                                ->persistent()
+                                                ->send();
+                                        }
                                     }),
                                 Forms\Components\Select::make('veiculo_id')
                                     ->required(false)
                                     ->label('Veículo')
+                                    ->live(onBlur: true)
                                     ->relationship(
                                         name: 'veiculo',
-                                        modifyQueryUsing: fn (Builder $query) => $query->where('status', 1)->orderBy('modelo')->orderBy('placa'),
+                                        modifyQueryUsing: fn (Builder $query) => $query->where('status', 1)->where('status_locado', 0)->orderBy('modelo')->orderBy('placa'),
                                     )
                                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->modelo} {$record->placa}")
                                     ->searchable(['modelo', 'placa'])
+                                    ->afterStateUpdated(function (Set $set, $state) {
+                                        $veiculo = Veiculo::find($state);
+                                        if ($state != null) {
+                                            $set('km_saida', $veiculo->km_atual);
+                                        }
+                                    })
                                     ->columnSpan([
                                         'xl' => 2,
                                         '2xl' => 2,
                                     ]),
                                 Forms\Components\DatePicker::make('data_saida')
+                                    ->default(Carbon::today())
                                     ->displayFormat('d/m/Y')
                                     ->label('Data Saída')
                                     ->required(false),
                                 Forms\Components\TimePicker::make('hora_saida')
+                                    ->seconds(false)
+                                    ->default(Carbon::now())
                                     ->label('Hora Saída')
                                     ->required(false),
                                 Forms\Components\DatePicker::make('data_retorno')
@@ -110,6 +129,8 @@ class LocacaoResource extends Resource
                                     })
                                     ->required(false),
                                 Forms\Components\TimePicker::make('hora_retorno')
+                                    ->seconds(false)
+                                    ->default(Carbon::now())
                                     ->label('Hora Retorno')
                                     ->required(false),
                                 Forms\Components\TextInput::make('km_saida')
@@ -259,7 +280,7 @@ class LocacaoResource extends Resource
 
                             ]),
                     ]),
-                    
+
                 Fieldset::make('Ocorrências da Locação')
                     ->schema([
                         Repeater::make('ocorrencia')
@@ -270,27 +291,27 @@ class LocacaoResource extends Resource
                                     '2xl' => 3,
                                 ])
                                     ->schema([
-                                Select::make('tipo')
-                                    ->options([
-                                        'multa' => 'Multa',
-                                        'colisao' => 'Colisão',
-                                        'avaria' => 'Avaria',
-                                        'danos_terceiros' => 'Danos a Terceiros',
-                                        'outro' => 'Outros',
-                                    ])
-                                    ->required(),
-                                DateTimePicker::make('data_hora'),
-                                TextInput::make('valor'),
-                                Textarea::make('descricao')
-                                    ->columnSpan(2)
-                                    ->autosize()
-                                    ->label('Descrição'),
-                                
-                                ToggleButtons::make('status')
-                                    ->label('Concluído?')
-                                    ->default(false)
-                                    ->boolean()
-                                    ->grouped()
+                                        Select::make('tipo')
+                                            ->options([
+                                                'multa' => 'Multa',
+                                                'colisao' => 'Colisão',
+                                                'avaria' => 'Avaria',
+                                                'danos_terceiros' => 'Danos a Terceiros',
+                                                'outro' => 'Outros',
+                                            ]),
+
+                                        DateTimePicker::make('data_hora'),
+                                        TextInput::make('valor'),
+                                        Textarea::make('descricao')
+                                            ->columnSpan(2)
+                                            ->autosize()
+                                            ->label('Descrição'),
+
+                                        ToggleButtons::make('status')
+                                            ->label('Concluído?')
+                                            ->default(false)
+                                            ->boolean()
+                                            ->grouped()
 
 
                                     ])
@@ -298,8 +319,19 @@ class LocacaoResource extends Resource
                             ->columnSpanFull()
                             ->addActionLabel('Novo')
                     ]),
-                Forms\Components\Toggle::make('status')
-                    ->label('Finalizar Locação'),
+                ToggleButtons::make('status')
+                    ->options([
+                        '0' => 'Locado',
+                        '1' => 'Finalizar',
+
+                    ])
+                    ->colors([
+                        '0' => 'danger',
+                        '1' => 'success',
+                    ])
+                    ->inline()
+                    ->default(0)
+                    ->label('Status'),
 
             ]);
     }
@@ -307,6 +339,7 @@ class LocacaoResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->sortable()
@@ -325,36 +358,52 @@ class LocacaoResource extends Resource
                     ->label('Placa'),
                 Tables\Columns\TextColumn::make('data_saida')
                     ->label('Data Saída')
-                    ->date(),
+                    ->date('d/m/Y'),
                 Tables\Columns\TextColumn::make('hora_saida')
+                    ->date('H:m')
                     ->sortable()
                     ->label('Hora Saída'),
                 Tables\Columns\TextColumn::make('data_retorno')
                     ->label('Data Retorno')
-                    ->date(),
+                    ->date('d/m/Y'),
                 Tables\Columns\TextColumn::make('hora_retorno')
+                    ->date('H:m')
                     ->label('Hora Retorno'),
                 Tables\Columns\TextColumn::make('Km_Percorrido')
-                    ->label('Km Percorrido')
+                    ->label('Km Total')
                     ->getStateUsing(function (Locacao $record): int {
 
                         return ($record->km_retorno - $record->km_saida);
                     }),
                 Tables\Columns\TextColumn::make('qtd_diarias')
                     ->label('Qtd Diárias'),
-                Tables\Columns\TextColumn::make('valor_total')
-                    ->money('BRL')
-                    ->label('Valor Total'),
-                Tables\Columns\TextColumn::make('valor_desconto')
-                    ->money('BRL')
-                    ->label('Desconto'),
+                // Tables\Columns\TextColumn::make('valor_total')
+                //     ->money('BRL')
+                //     ->label('Valor Total'),
+                // Tables\Columns\TextColumn::make('valor_desconto')
+                //     ->money('BRL')
+                //     ->label('Desconto'),
                 Tables\Columns\TextColumn::make('valor_total_desconto')
                     ->summarize(Sum::make()->money('BRL')->label('Total'))
                     ->money('BRL')
-                    ->label('Valor Total com Desconto'),
-                Tables\Columns\ToggleColumn::make('status')
-                    ->label('Finalizada')
-                    ->sortable(),
+                    ->label('Valor Total'),
+                Tables\Columns\TextColumn::make('status')
+                    ->summarize(Count::make())
+                    ->Label('Status')
+                    ->badge()
+                    ->alignCenter()
+                    ->color(fn (string $state): string => match ($state) {
+                        '0' => 'danger',
+                        '1' => 'success',
+                    })
+                    ->formatStateUsing(function ($state) {
+                        if ($state == 0) {
+                            return 'Locado';
+                        }
+                        if ($state == 1) {
+                            return 'Finalizada';
+                        }
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -365,6 +414,9 @@ class LocacaoResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                Filter::make('Locados')
+                    ->query(fn (Builder $query): Builder => $query->where('status', false))
+                    ->default(1),
                 SelectFilter::make('cliente')->searchable()->relationship('cliente', 'nome'),
                 SelectFilter::make('veiculo')->searchable()->relationship('veiculo', 'placa'),
                 Tables\Filters\Filter::make('datas')
@@ -392,7 +444,15 @@ class LocacaoResource extends Resource
                     ->url(fn (Locacao $record): string => route('imprimirLocacao', $record))
                     ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make()
-                     ->modalHeading('Editar locação'),
+                    ->modalHeading('Editar locação')
+                    ->after(function ($data) {
+                        if ($data['status'] == 1) {
+                            $veiculo = Veiculo::find($data['veiculo_id']);
+                            $veiculo->km_atual = $data['km_retorno'];
+                            $veiculo->status_locado = 0;
+                            $veiculo->save();
+                        }
+                    }),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
