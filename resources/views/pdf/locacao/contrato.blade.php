@@ -227,7 +227,7 @@
         contrato do presente, nem permitir que outra pessoa conduza o referido veículo sem a inequívoca e expressa autorização do LOCADOR, sob pena de
         rescisão contratual, multa de R$ 600,00 (seiscentos reais), bem como, a responsabilização total por qualquer ato ou danos em relação ao veículo,
         inclusive os provenientes de caso fortuito ou força maior.<br>
-        CLÁUSULA 2ª – DO HORÁRIO DOALUGUÉL E LOCAL DE COLETA E DEVOLUÇÃO DO VEÍCULO.<br>
+        CLÁUSULA 2ª – DO HORÁRIO DO ALUGUEL E LOCAL DE COLETA E DEVOLUÇÃO DO VEÍCULO.<br>
         2.1. O veículo em questão permanecerá na posse do LOCATÁRIO por período integral, de segunda a domingo.<br>
         2.2.O LOCATÁRIO deverá apresentar o veículo ao LOCADOR 01 (uma) vez por mês para a realização de vistoria, em data e endereço por este designado.<br>
         2.3.A não apresentação do veículo, no prazo e os supracitados locais, serão cobrados ao LOCATÁRIO multa de R$ 150,00 (cento e cinquenta reais)<br>
