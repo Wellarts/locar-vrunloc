@@ -143,7 +143,7 @@ class LocacaoResource extends Resource
                                                     ->label('CNH'),
                                                 Forms\Components\DatePicker::make('validade_cnh')
                                                     //   ->format('d/m/Y')
-                                                       ->label('Valiade da CNH'),
+                                                    ->label('Valiade da CNH'),
                                                 Forms\Components\TextInput::make('rg')
                                                     ->label('RG'),
                                                 Forms\Components\TextInput::make('exp_rg')
@@ -160,7 +160,7 @@ class LocacaoResource extends Resource
                                                     ->downloadable()
                                                     ->label('Foto CNH'),
 
-                                                    Forms\Components\DatePicker::make('data_nascimento')
+                                                Forms\Components\DatePicker::make('data_nascimento')
                                                     ->label('Data de Nascimento'),
 
 
@@ -423,19 +423,23 @@ class LocacaoResource extends Resource
                             ->columnSpanFull()
                             ->addActionLabel('Novo')
                     ]),
-                ToggleButtons::make('status')
-                    ->options([
-                        '0' => 'Locado',
-                        '1' => 'Finalizar',
+                Fieldset::make('Controle da Locação')
+                    ->schema([
+                        ToggleButtons::make('status')
+                            ->options([
+                                '0' => 'Locado',
+                                '1' => 'Finalizar',
 
+                            ])
+                            ->colors([
+                                '0' => 'danger',
+                                '1' => 'success',
+                            ])
+                            ->inline()
+                            ->default(0)
+                            ->label(''),
                     ])
-                    ->colors([
-                        '0' => 'danger',
-                        '1' => 'success',
-                    ])
-                    ->inline()
-                    ->default(0)
-                    ->label('Status'),
+
 
             ]);
     }
@@ -464,13 +468,35 @@ class LocacaoResource extends Resource
                     ->label('Data Saída')
                     ->date('d/m/Y'),
                 Tables\Columns\TextColumn::make('hora_saida')
+                    ->alignCenter()
                     ->date('H:m')
                     ->sortable()
                     ->label('Hora Saída'),
                 Tables\Columns\TextColumn::make('data_retorno')
+                    ->badge()
                     ->label('Data Retorno')
-                    ->date('d/m/Y'),
+                    ->date('d/m/Y')
+                    ->color(static function ($state): string {
+                        $hoje = Carbon::today();
+                        $dataRetorno = Carbon::parse($state);
+                        $qtd_dias = $hoje->diffInDays($dataRetorno, false);
+                        //  dd($qtd_dias.' - '.$dataSaida.' - '.$hoje);
+                        // echo $qtd_dias;
+
+                        if ($qtd_dias <= 3 && $qtd_dias >= 0) {
+                            return 'warning';
+                        }
+
+                        if ($qtd_dias < 0) {
+                            return 'danger';
+                        }
+
+                        if ($qtd_dias > 3) {
+                            return 'success';
+                        }
+                    }),
                 Tables\Columns\TextColumn::make('hora_retorno')
+                    ->alignCenter()
                     ->date('H:m')
                     ->label('Hora Retorno'),
                 Tables\Columns\TextColumn::make('Km_Percorrido')
