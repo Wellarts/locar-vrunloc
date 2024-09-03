@@ -33,6 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->databaseNotifications()
             ->favicon(asset('img/logo-motomaster.png'))
             ->brandLogo(asset('img/logo-motomaster.png'))
             ->brandLogoHeight('3rem')
