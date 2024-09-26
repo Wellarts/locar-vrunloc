@@ -216,7 +216,7 @@
 </div>
 <div>
     <p class="parag">
-        Registro: <b>{{$locacao->Veiculo->id}}</b><br><br>
+        Registro: <b>{{$locacao->id}}</b><br><br>
         Parte, locadora. Motomaster Campo Grande Ltda CNPJ 53.825.708/0001-48 Endereço: AV. Cesario de Melo 04030 denominado LOCADOR.<br><br>
 
 
