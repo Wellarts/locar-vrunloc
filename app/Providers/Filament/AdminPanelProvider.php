@@ -51,12 +51,12 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-             //   Widgets\FilamentInfoWidget::class,
-                SomatorioLocacao::class,
-                LocacaoMes::class,
-                ContasReceberHoje::class,
-                ContasPagarHoje::class,
-                StatsVeiculos::class,
+                // Widgets\FilamentInfoWidget::class,
+                // SomatorioLocacao::class,
+                // LocacaoMes::class,
+                // ContasReceberHoje::class,
+                // ContasPagarHoje::class,
+                // StatsVeiculos::class,
             ])
             ->middleware([
                 EncryptCookies::class,
