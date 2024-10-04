@@ -55,11 +55,11 @@
 
 <table style="width: 100%">
   <tr>
-    <td><img src="{{ asset('img/logo-motomaster.png') }}" alt="Image" height="60" width="180"></td>
-    <td> <p style="width: 100%; font-size:28px; font-weight: bold;" align="center">Locadora Motomaster</p>
-         <p style="font-size:16px;" align="center">Av. Cesário de Melo, nº 4030 Campo Grande - Rio de Janeiro - RJ.<br>
-                                                  Contato: (21)7402-1183<br>
-                                                  Email: erike@rdbled.com.br - CNPJ: 53-825-708/0001-48</p>
+    <td><img src="{{ asset('img/logo.png') }}" alt="Image" height="60" width="180"></td>
+    <td> <p style="width: 100%; font-size:28px; font-weight: bold;" align="center">VRUMLOC LOCAÇÃO</p>
+         <p style="font-size:16px;" align="center">Rua Joaquim Moreira Neves, nº 281 - Recreio dos Bandeirantes <br>
+                                                             Rio de Janeiro - RJ - Contato: (21)97380-2166<br>
+                                                            Email: xxxx@xxx.com - CNPJ: 57.042.447/0001-40</p>
     </td>
 </tr>
 
@@ -207,7 +207,7 @@
 
 <table style="width: 100%">
     <tr>
-        <td><img src="{{ asset('img/logo-motomaster.png') }}" alt="Image" height="60" width="180"></td>
+        <td><img src="{{ asset('img/logo.png') }}" alt="Image" height="60" width="180"></td>
       <td> <p style="width: 100%; font-size:20px; font-weight: bold" align="center">Contrato de Locação de Veículos</p>
 
       </td>
@@ -217,10 +217,10 @@
 <div>
     <p class="parag">
         Registro: <b>{{$locacao->id}}</b><br><br>
-        Parte, locadora. Motomaster Campo Grande Ltda CNPJ 53.825.708/0001-48 Endereço: AV. Cesario de Melo 04030 denominado LOCADOR.<br><br>
+        Parte, locadora. VRUMLOC Locação Ltda CNPJ 57.042.447-0001-40 Endereço: Rua Joaquim Moreira Neves 281 Recreio dos Bandeirantes - Rio de Janeiro - RJ denominado LOCADOR.<br><br>
 
 
-        CLÁUSULA 1 DO OBJETO DO CONTRATO:<br>
+        CLÁUSULA 1ª DO OBJETO DO CONTRATO:<br>
         1.1- Por meio deste contrato regula-se a locação da motocicleta da marca: <b>{{$locacao->Veiculo->modelo}} - {{$locacao->Veiculo->cor}} - {{$locacao->Veiculo->ano}}.</b>.<br>
 
         1.2. O veículo descrito acima, será utilizado exclusivamente pelo LOCATÁRIO, não sendo permitido sub-rogar para terceiros os direitos por ele obtidos
@@ -398,21 +398,9 @@
             LOCATÁRIO: {{$locacao->Cliente->nome}}<br><Br><br><br>
 
             ___________________________________________________________<br>
-            LOCADOR: MOTOMASTER CAMPO GRANDE LTDA.
-
-
+            LOCADOR: VRUMLOC LOCAÇÃO LTDA.
 
         </div>
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>
