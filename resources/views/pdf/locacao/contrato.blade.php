@@ -59,7 +59,7 @@
     <td> <p style="width: 100%; font-size:28px; font-weight: bold;" align="center">VRUMLOC LOCAÇÃO</p>
          <p style="font-size:16px;" align="center">Rua Joaquim Moreira Neves, nº 281 - Recreio dos Bandeirantes <br>
                                                              Rio de Janeiro - RJ - Contato: (21)97380-2166<br>
-                                                            Email: xxxx@xxx.com - CNPJ: 57.042.447/0001-40</p>
+                                                            Email: comercial@vrumloc.com.br - CNPJ: 57.042.447/0001-40</p>
     </td>
 </tr>
 
