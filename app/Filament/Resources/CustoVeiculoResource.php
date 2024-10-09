@@ -81,7 +81,7 @@ class CustoVeiculoResource extends Resource
                         ExportFormat::Xlsx,
                     ])
                     ->columnMapping(false)
-                    ->label('Exportar Contas')
+                    ->label('Exportar')
                     ->modalHeading('Confirmar exportação?')
             ])
             ->columns([
