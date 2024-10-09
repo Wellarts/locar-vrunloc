@@ -28,7 +28,7 @@
 
     #ficha td {
     border: 1px solid rgb(160 160 160);
-    padding: 8px 10px;
+    padding: 0px 2px;
     }
 
 
@@ -63,6 +63,7 @@
     </td>
 </tr>
 
+</table>
 </table>
 <div class="retangulo">
     <span class="texto">FICHA DE LOCAÇÃO</span>
@@ -190,6 +191,83 @@
     </td>
 </tr>
 </table>
+
+<div class="container">
+    <div class="tela">
+        <table>
+            <tr>
+                <td>
+                    <h3>Inspeção de Veículo</h3>
+                    <tr>
+                        <td>( ) Buzina.</td>
+                    </tr>
+                    <tr>
+                        <td>( ) Farol</td>
+                    </tr>
+                    <tr>
+                        <td>( ) Bateria</td>
+                    </tr>
+                    <tr>
+                        <td>( ) Pisca Esquerdo</td>
+                    </tr>
+                    <tr>
+                        <td>( ) Pisca Direito</td>
+                    </tr>
+                    <tr>
+                        <td>( ) Pedaleiras</td>
+                    </tr>
+                    <tr>
+                        <td>( ) Carenagem Esquerda</td>
+                    </tr>
+                    <tr>
+                        <td>( ) Carenagem Direita</td>
+                    </tr>
+                    <tr>
+                        <td>( ) Pneus</td>
+                    </tr>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+<div style="margin-left: 300px">
+    <table style="width: 100%">
+        <tr>
+            <td><p style="margin-left: 90px">Rio de Janeiro, {{ $dataAtual->isoFormat('DD MMMM YYYY') }}</p></td>
+        </tr>
+        <br><br><br>
+        <tr>
+            <td>
+                <tr>
+                    <td><center>_________________________________________</center><br>
+                                <center>LOCADOR: VRUMLOC LOCAÇÃO.</center>
+                    <p style = "font-size:10px; text-align: center">Proprietário ou representante legal da Empresa</p>
+                    </td>
+                </tr>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <tr>
+                    <td>
+                        <div>
+                           <center> _________________________________________</center><br>
+                                    <center>LOCATÁRIO: {{$locacao->Cliente->nome}}</center>
+                                    
+                        </div>
+                    </td>
+                </tr>
+
+            </td>
+        </tr>
+       </table>
+
+</div>
+<div style="margin-top: 50px">Observações da Inspeção:_________________________________________________________________<br>
+______________________________________________________________________________________</div>
 
 <!-- PÁGINA 2 -->
 
