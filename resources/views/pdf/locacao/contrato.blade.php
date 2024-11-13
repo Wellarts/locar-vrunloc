@@ -396,7 +396,7 @@ ________________________________________________________________________________
         5.4.A responsabilidade determinada nos itens supracitados permanece estabelecida, inclusive, caso o LOCATÁRIO não se encontre no interior do
         veículo objeto do presente contrato.<br>
         CLÁUSULA 6ª – DO PAGAMENTO EM RAZÃO DA LOCAÇÃO DO VEÍCULO<br>
-        6.1.O LOCATÁRIO pagará ao LOCADOR o valor citado no início do contrato semanalmente, realizado em toda segunda-feira.<br>
+        6.1.O LOCATÁRIO pagará ao LOCADOR o valor citado no início do contrato semanalmente.<br>
         6.2. Caso o pagamento seja realizado após a data acordada, o valor sofrerá um acréscimo de R$ 30,00 (trinta reais) a título de multa, bem
         como um acréscimo de R$ 20,00 (vinte reais) por dia de atraso a título de juros.<br>
         6.3. Após 24 (vinte e quatro) horas do não pagamento semanal acordado, o LOCADOR poderá encerrar o contrato e bloquear o veículo, entendendo
