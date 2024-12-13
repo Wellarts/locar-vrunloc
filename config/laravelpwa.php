@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'name' => 'Wsys Vendas',
+    'name' => 'Wsys Locar',
     'manifest' => [
-        'name' => env('APP_NAME', 'Wsys Vendas'),
-        'short_name' => 'Wsys Vendas',
+        'name' => env('APP_NAME', 'Wsys Locar'),
+        'short_name' => 'Locar',
         'start_url' => '/',
         'background_color' => '#050505',
         'theme_color' => '#ffbf00',
@@ -78,5 +78,5 @@ return [
         //     ]
         // ],
         'custom' => []
-        ]
-    ];
+    ]
+];
