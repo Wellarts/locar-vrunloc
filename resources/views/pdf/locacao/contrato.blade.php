@@ -236,7 +236,7 @@
         <tr>
             <td><p style="margin-left: 90px">Rio de Janeiro, {{ $dataAtual->isoFormat('DD MMMM YYYY') }}</p></td>
         </tr>
-        <br><br><br>
+        <br>
         <tr>
             <td>
                 <tr>
@@ -248,7 +248,7 @@
 
             </td>
         </tr>
-
+        <br><br>
         <tr>
             <td>
                 <tr>
@@ -266,8 +266,7 @@
        </table>
 
 </div>
-<div style="margin-top: 50px">Observações da Inspeção:_________________________________________________________________<br>
-______________________________________________________________________________________</div>
+
 
 <!-- PÁGINA 2 -->
 
