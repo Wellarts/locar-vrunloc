@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\ExportAction;
 use App\Filament\Exports\ContasReceberExporter;
+use App\Models\Categoria;
 use Filament\Actions\Exports\Enums\ExportFormat;
 
 class ContasReceberResource extends Resource
@@ -40,13 +41,41 @@ class ContasReceberResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('cliente_id')
+                    ->disabled(function ($context) {
+                        if ($context == 'edit') {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    })
                     ->label('Cliente')
                     ->searchable()
                     ->options(Cliente::all()->pluck('nome', 'id')->toArray())
                     ->required(),
                 Forms\Components\TextInput::make('valor_total')
+                    ->disabled(function ($context) {
+                        if ($context == 'edit') {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    })
+                    ->label('Valor Total')
+                    ->currencyMask(thousandSeparator: '.', decimalSeparator: ',', precision: 2)
                     ->numeric()
+                    ->prefix('R$')
+                    ->inputMode('decimal')
                     ->required(),
+                Forms\Components\Select::make('categoria_id')
+                    ->label('Categoria')
+                    ->searchable()
+                    ->relationship('categoria', 'nome')
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('nome')
+                            ->label('Nome')
+                            ->required(),
+                    ]),
+                    
                 Forms\Components\Select::make('proxima_parcela')
                     ->hiddenOn('edit')
                     ->options([
@@ -117,10 +146,18 @@ class ContasReceberResource extends Resource
                     ),
 
                 Forms\Components\TextInput::make('valor_parcela')
+                    ->label('Valor Parcela')
+                    ->currencyMask(thousandSeparator: '.', decimalSeparator: ',', precision: 2)
                     ->numeric()
+                    ->prefix('R$')
+                    ->inputMode('decimal')
                     ->required(),
                 Forms\Components\TextInput::make('valor_recebido')
-                    ->numeric(),
+                    ->label('Valor Recebido')
+                    ->currencyMask(thousandSeparator: '.', decimalSeparator: ',', precision: 2)
+                    ->numeric()
+                    ->prefix('R$')
+                    ->inputMode('decimal'),
                 Forms\Components\Textarea::make('obs')
                     ->label('Observações'),
             ]);
@@ -148,16 +185,22 @@ class ContasReceberResource extends Resource
                     ->alignCenter()
                     ->label('Parcela Nº'),
                 Tables\Columns\TextColumn::make('data_vencimento')
+                    ->label('Data Vencimento')
                     ->date('d/m/Y')
                     ->sortable()
                     ->alignCenter()
                     ->badge()
                     ->color('danger'),
                 Tables\Columns\TextColumn::make('valor_total')
+                    ->label('Valor Total')
                     ->alignCenter()
                     ->badge()
                     ->color('success')
                     ->money('BRL'),
+                Tables\Columns\TextColumn::make('categoria.nome')
+                    ->label('Categoria')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\SelectColumn::make('formaPgmto')
                     ->Label('Forma de Pagamento')
                     ->disabled()
@@ -171,6 +214,7 @@ class ContasReceberResource extends Resource
 
 
                 Tables\Columns\TextColumn::make('valor_parcela')
+                    ->label('Valor Parcela')
                     ->summarize(Sum::make()->money('BRL')->label('Total'))
                     ->alignCenter()
                     ->badge()
@@ -180,6 +224,7 @@ class ContasReceberResource extends Resource
                     ->label('Recebido')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('valor_recebido')
+                    ->label('Valor Recebido')
                     ->summarize(Sum::make()->money('BRL')->label('Total'))
                     ->label('Valor Recebido')
                     ->alignCenter()
@@ -187,6 +232,7 @@ class ContasReceberResource extends Resource
                     ->color('warning')
                     ->money('BRL'),
                 Tables\Columns\TextColumn::make('data_recebimento')
+                    ->label('Data Recebimento')
                     ->date('d/m/Y')
                     ->alignCenter()
                     ->badge()
@@ -205,7 +251,8 @@ class ContasReceberResource extends Resource
                     ->query(fn(Builder $query): Builder => $query->where('status', false))->default(true),
                 Filter::make('Recebidas')
                     ->query(fn(Builder $query): Builder => $query->where('status', true)),
-                SelectFilter::make('cliente')->relationship('cliente', 'nome'),
+                SelectFilter::make('cliente')->relationship('cliente', 'nome')->searchable(),
+                SelectFilter::make('categoria')->relationship('categoria', 'nome')->searchable(),
                 Tables\Filters\Filter::make('data_vencimento')
                     ->form([
                         Forms\Components\DatePicker::make('vencimento_de')
@@ -235,7 +282,7 @@ class ContasReceberResource extends Resource
                             $addFluxoCaixa = [
                                 'valor' => ($record->valor_parcela),
                                 'tipo'  => 'CREDITO',
-                                'obs'   => 'Recebimento da conta do cliente '.$record->cliente->nome.' da parcela nº: '.$record->ordem_parcela.'',
+                                'obs'   => 'Recebimento da conta do cliente ' . $record->cliente->nome . ' da parcela nº: ' . $record->ordem_parcela . '',
                             ];
 
                             FluxoCaixa::create($addFluxoCaixa);
