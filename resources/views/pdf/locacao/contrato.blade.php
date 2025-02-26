@@ -57,9 +57,16 @@
   <tr>
     <td><img src="{{ asset('img/logo.png') }}" alt="Image" height="60" width="180"></td>
     <td> <p style="width: 100%; font-size:28px; font-weight: bold;" align="center">VRUMLOC LOCAÇÃO</p>
-         <p style="font-size:16px;" align="center">Rua Joaquim Moreira Neves, nº 281 - Recreio dos Bandeirantes <br>
-                                                             Rio de Janeiro - RJ - Contato: (21)97380-2166<br>
-                                                            Email: comercial@vrumloc.com.br - CNPJ: 57.042.447/0001-40</p>
+         <p style="font-size:16px;" align="center">Rua Capitão Zenóbio, 478 - Zenobiopolis PL. A<br>
+                                                            Paty do Alferes - RJ - CEP: 26.950-000 - Contato: (21)96921-6009<br>
+                                                            Email: comercial@vrumloc.com.br - CNPJ: 57.042.447/0001-40<br>
+                                                           </p>
+    </td>
+  
+</tr>
+<tr>
+    <td colspan="2" style="text-align: right; font-size: 14px; color: rgb(40, 39, 39)">
+         <strong>Retirada/Entrega da moto:</strong> Av. Cesário de Melo, Nº 4030 Campo Grande - Rio De Janeiro - RJ
     </td>
 </tr>
 
