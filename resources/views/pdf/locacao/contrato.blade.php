@@ -55,7 +55,7 @@
 
 <table style="width: 100%">
   <tr>
-    <td><img src="{{ asset('img/logo.png') }}" alt="Image" height="60" width="180"></td>
+    <td><img src="{{ public_path('img/logo.png') }}" alt="Image" height="60" width="180"></td>
     <td> <p style="width: 100%; font-size:28px; font-weight: bold;" align="center">VRUMLOC LOCAÇÃO</p>
          <p style="font-size:16px;" align="center">Rua Capitão Zenóbio, 478 - Zenobiopolis PL. A<br>
                                                             Paty do Alferes - RJ - CEP: 26.950-000 - Contato: (21)96921-6009<br>
@@ -300,7 +300,7 @@
 
 <table style="width: 100%">
     <tr>
-        <td><img src="{{ asset('img/logo.png') }}" alt="Image" height="60" width="180"></td>
+        <td><img src="{{ public_path('img/logo.png') }}" alt="Image" height="60" width="180"></td>
       <td> <p style="width: 100%; font-size:20px; font-weight: bold" align="center">Contrato de Locação de Veículos</p>
 
       </td>
