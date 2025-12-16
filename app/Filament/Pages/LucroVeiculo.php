@@ -15,6 +15,8 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Leandrocfe\FilamentPtbrFormFields\Money;
 
 class LucroVeiculo extends Page implements HasForms
@@ -29,6 +31,8 @@ class LucroVeiculo extends Page implements HasForms
     protected static ?string $title = 'Lucratividade por Veículo';
 
     protected static ?string $navigationGroup = 'Consultas';
+
+    protected static bool $shouldRegisterNavigation = false;
 
     public array $data = [];
 
@@ -47,52 +51,51 @@ class LucroVeiculo extends Page implements HasForms
                     ->label('Data de Início'),
                 DatePicker::make('fim')
                     ->label('Data de Fim'),
-                    Select::make('veiculo_id')
-                        ->searchable()
-                        ->options(Veiculo::all()->pluck('placa', 'id')->toArray())
-                        ->live()
-                       // ->searchable()
-                        ->label('Veículo')
-                        ->afterStateUpdated(function ($state, Set $set, Get $get) {
-                             //   dd($state);
+                Forms\Components\Select::make('veiculo_id')
+                    ->required(false)
+                    ->label('Veículo')
+                    ->live(onBlur: true)
+                    ->relationship(
+                        name: 'veiculo',
+                        modifyQueryUsing: function (Builder $query, $context) {
+                            if ($context === 'create') {
+                                $query->where('status', 1)->where('status_locado', 0)->orderBy('modelo')->orderBy('placa');
+                            } else {
+                                $query->where('status', 1)->orderBy('modelo')->orderBy('placa');
+                            }
+                        }
+                    )
+                    ->getOptionLabelFromRecordUsing(fn(Model $record) => "{$record->modelo} {$record->placa}")
+                    ->searchable(['modelo', 'placa'])
+                    ->afterStateUpdated(function (Set $set, $state) {
+                        $veiculo = Veiculo::find($state);
+                        if ($state != null) {
+                            $set('km_saida', $veiculo->km_atual);
+                        }
+                    })
+                    ->columnSpan([
+                        'xl' => 2,
+                        '2xl' => 2,
+                    ]),
+                //  Forms\Components\TextInput::make('total_locacao')
+                Money::make('total_locacao')
+                    ->currencyMask(thousandSeparator: '.', decimalSeparator: ',', precision: 2)
+                    ->readOnly()
+                    //  ->money('BRL')
+                    ->label('Total de Locação R$:'),
+                Money::make('total_custo')
+                    ->currencyMask(thousandSeparator: '.', decimalSeparator: ',', precision: 2)
+                    ->readOnly()
+                    //  ->money('BRL')
+                    ->label('Total de Custos R$:'),
+                Money::make('lucro')
+                    ->currencyMask(thousandSeparator: '.', decimalSeparator: ',', precision: 2)
+                    ->readOnly()
+                    // ->money('BRL')
+                    ->label('Lucro Real R$:'),
 
-                              $total_locacao = Locacao::where('veiculo_id', $state)->whereBetween('data_saida',[$get('inicio'),$get('fim')])->sum('valor_total_desconto');
-                              $total_custo = CustoVeiculo::where('veiculo_id', $state)->whereBetween('data',[$get('inicio'),$get('fim')])->sum('valor');
-                           // dd('$total_custo');
-                                $set('total_locacao', $total_locacao);
-                                $set('total_custo', $total_custo );
-                                $set('lucro', $total_locacao - $total_custo);
 
 
-                        }),
-                  //  Forms\Components\TextInput::make('total_locacao')
-                        Money::make('total_locacao')
-                        ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
-                        ->readOnly()
-                      //  ->money('BRL')
-                        ->label('Total de Locação R$:'),
-                        Money::make('total_custo')
-                        ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
-                        ->readOnly()
-                      //  ->money('BRL')
-                        ->label('Total de Custos R$:'),
-                        Money::make('lucro')
-                        ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
-                        ->readOnly()
-                       // ->money('BRL')
-                        ->label('Lucro Real R$:'),
-
-
-
-                ])->columns(2)->inlineLabel();
+            ])->columns(2)->inlineLabel();
     }
-
-
-
-
 }
-
-
-
-
-
